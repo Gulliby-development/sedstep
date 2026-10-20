@@ -97,6 +97,13 @@ command 3: SC002 label x is never used
 2 findings
 ```
 
+A block with no command between `{` and `}` is reported as `SC005 block is empty` on the `{` command: `sedstep check 'p;/x/{};p'` exits with 1 and prints:
+
+```text
+command 2: SC005 block is empty
+1 finding
+```
+
 ## Supported subset and limitations
 
 The supported commands are `{`, `}`, labels (`:NAME`), branches (`b`, `t`, `T`), `s`, `a`, `i`, `d`, `D`, `p`, `P`, `n`, `N`, `g`, `G`, `h`, `H`, `x`, `=`, `q`, and `Q`. Addresses include line numbers, `$`, regular expressions, ranges, `+N` second addresses, and negation.

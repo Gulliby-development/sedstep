@@ -24,15 +24,22 @@ public static class Check
         int? latestTerminator = null;
         bool hasPriorSubstitution = false;
 
+        Cmd? previous = null;
         foreach (Cmd command in cmds)
         {
             if (command.Letter == '}')
             {
+                if (previous is { Letter: '{' })
+                {
+                    findings.Add(new Finding(previous.Number, "SC005", "block is empty"));
+                }
+
                 if (blockStates.Count > 0)
                 {
                     latestTerminator = blockStates.Pop();
                 }
 
+                previous = command;
                 continue;
             }
 
@@ -90,6 +97,8 @@ public static class Check
             {
                 latestTerminator = command.Number;
             }
+
+            previous = command;
         }
 
         findings.Sort(static (left, right) =>

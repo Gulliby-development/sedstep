@@ -104,6 +104,13 @@ command 2: SC005 block is empty
 1 finding
 ```
 
+A branch whose label is the very next command does nothing, because the script goes to the next command either way. It is reported as `SC006` on the branch: `sedstep check 's/a/b/;ba;:a'` exits with 1 and prints:
+
+```text
+command 2: SC006 jump to label a does nothing: the label follows it
+1 finding
+```
+
 ## Supported subset and limitations
 
 The supported commands are `{`, `}`, labels (`:NAME`), branches (`b`, `t`, `T`), `s`, `a`, `i`, `d`, `D`, `p`, `P`, `n`, `N`, `g`, `G`, `h`, `H`, `x`, `=`, `q`, and `Q`. Addresses include line numbers, `$`, regular expressions, ranges, `+N` second addresses, and negation.

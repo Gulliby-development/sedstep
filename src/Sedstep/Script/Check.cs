@@ -25,8 +25,10 @@ public static class Check
         bool hasPriorSubstitution = false;
 
         Cmd? previous = null;
+        int position = -1;
         foreach (Cmd command in cmds)
         {
+            position++;
             if (command.Letter == '}')
             {
                 if (previous is { Letter: '{' })
@@ -73,6 +75,18 @@ public static class Check
                     command.Number,
                     "SC003",
                     command.Letter + " has no s command before it"));
+            }
+
+            if ((command.Letter is 'b' or 't' or 'T')
+                && command.Label.Length > 0
+                && position + 1 < cmds.Count
+                && cmds[position + 1] is { Letter: ':' } following
+                && following.Label == command.Label)
+            {
+                findings.Add(new Finding(
+                    command.Number,
+                    "SC006",
+                    "jump to label " + command.Label + " does nothing: the label follows it"));
             }
 
             if (command.First is { Kind: AddrKind.Line } first

@@ -109,19 +109,19 @@ public class CheckTests
     [Fact]
     public void AcceptsForwardBranchUseAndLabelReachabilityReset()
     {
-        AssertFindings("b x;:x");
+        AssertFindings("b y;:x;b x;:y");
     }
 
     [Fact]
     public void ReportsConditionalBranchWithoutPriorSubstitution()
     {
-        AssertFindings("t x;:x", new Finding(1, "SC003", "t has no s command before it"));
+        AssertFindings("t x;p;:x", new Finding(1, "SC003", "t has no s command before it"));
     }
 
     [Fact]
     public void ReportsInverseConditionalBranchWithoutPriorSubstitution()
     {
-        AssertFindings("T x;:x", new Finding(1, "SC003", "T has no s command before it"));
+        AssertFindings("T x;p;:x", new Finding(1, "SC003", "T has no s command before it"));
     }
 
     [Fact]
